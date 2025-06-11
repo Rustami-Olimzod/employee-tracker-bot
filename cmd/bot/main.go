@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"employee-tracker-bot/internal/services"
+	"fmt"
 	"log"
 	"os"
 
@@ -44,6 +46,7 @@ func main() {
 
 	repo := models.NewPgRepository(db)
 	lateHandler := handlers.NewLateHandler(repo)
+	pointService := services.NewService(db)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -82,6 +85,11 @@ func main() {
 			bot.Send(msg)
 		case "Опоздание":
 			lateHandler.HandleLateStart(bot, update.Message)
+		case "Баллы":
+			userID := fmt.Sprintf("%d", update.Message.From.ID)
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, pointService.GetPoints(userID))
+			msg.ReplyMarkup = services.GetPointsKeyboard() // подключаем клавиатуру
+			bot.Send(msg)
 		case "Изменить":
 			lateHandler.HandleEdit(bot, update.Message)
 		default:
