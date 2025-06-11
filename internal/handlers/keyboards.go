@@ -10,6 +10,21 @@ func GetMainKeyboard() tgbotapi.ReplyKeyboardMarkup {
 		),
 	)
 }
+func GetPointsKeyboard() tgbotapi.ReplyKeyboardMarkup {
+	return tgbotapi.NewReplyKeyboard(
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Баллы"),
+			tgbotapi.NewKeyboardButton("Добавить переработку"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Обновить баллы"),
+			tgbotapi.NewKeyboardButton("Получить награду"),
+		),
+		tgbotapi.NewKeyboardButtonRow(
+			tgbotapi.NewKeyboardButton("Главное меню"),
+		),
+	)
+}
 
 func GetLateReasonsKeyboard() tgbotapi.ReplyKeyboardMarkup {
 	return tgbotapi.NewReplyKeyboard(
